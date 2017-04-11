@@ -27,7 +27,7 @@ public class ComputeController {
     @RequestMapping(value = "/add" ,method = RequestMethod.GET)
     public Integer add(@RequestParam Integer a, @RequestParam Integer b) {
 //        ServiceInstance instance = client.getLocalServiceInstance();
-        ServiceInstance instance = client.getInstances("springcloud-eureka-service").get(0);
+        ServiceInstance instance = client.getInstances("springcloud-eureka-service2").get(0);
         Integer r = a + b;
         logger.info("/add, host:" + instance.getHost() + ", service_id:" + instance.getServiceId() + ", result:" + r);
         return r;
