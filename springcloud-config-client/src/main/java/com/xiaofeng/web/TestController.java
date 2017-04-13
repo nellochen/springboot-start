@@ -23,4 +23,12 @@ public class TestController {
     public String from() {
         return this.from;
     }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
 }
