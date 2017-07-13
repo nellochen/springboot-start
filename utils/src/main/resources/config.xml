@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
 <config>
     <chartType>pie</chartType>
-    <className>com.xiaofeng.utils.designpatterns.factorymethod.FileLoggerFactory</className>
+    <className>com.xiaofeng.utils.designpatterns.abstractfactory.SpringSkinFactory</className>
 </config>
