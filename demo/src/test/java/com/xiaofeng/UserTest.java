@@ -30,7 +30,7 @@ public class UserTest {
 
     @Test
     public void testUserController()throws Exception{
-        RequestBuilder request = null;
+        RequestBuilder request;
 
         // 1、get查一下user列表，应该为空
         request = get("/users/");

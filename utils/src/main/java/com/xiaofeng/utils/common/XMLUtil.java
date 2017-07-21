@@ -32,8 +32,7 @@ public class XMLUtil {
             Node classNode = nl.item(0).getFirstChild();
             String chartType = classNode.getNodeValue().trim();
             return chartType;
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -50,19 +49,105 @@ public class XMLUtil {
 
             //获取包含类名的文本节点
             NodeList nl = doc.getElementsByTagName("className");
-            Node classNode=nl.item(0).getFirstChild();
-            String cName=classNode.getNodeValue();
+            Node classNode = nl.item(0).getFirstChild();
+            String cName = classNode.getNodeValue();
 
             //通过类名生成实例对象并将其返回
-            Class c=Class.forName(cName);
-            Object obj=c.newInstance();
+            Class c = Class.forName(cName);
+            Object obj = c.newInstance();
             return obj;
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
+    //该方法用于从XML配置文件中提取具体类类名，并返回一个实例对象
+    public static Object getBean(String path) {
+        try {
+            //创建DOM文档对象
+            DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = dFactory.newDocumentBuilder();
+            Document doc;
+            doc = builder.parse(new File(ToolDirFile.getClassesPath(XMLUtil.class) + path));
+
+            //获取包含类名的文本节点
+            NodeList nl = doc.getElementsByTagName("className");
+            Node classNode = nl.item(0).getFirstChild();
+            String cName = classNode.getNodeValue();
+
+            //通过类名生成实例对象并将其返回
+            Class c = Class.forName(cName);
+            Object obj = c.newInstance();
+            return obj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //该方法用于从XML配置文件中提取具体类类名，并返回一个实例对象，可以通过参数的不同返回不同类名节点所对应的实例
+    public static Object getBean(String path, int i) {
+        try {
+            //创建文档对象
+            DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = dFactory.newDocumentBuilder();
+            Document doc;
+            doc = builder.parse(new File(ToolDirFile.getClassesPath(XMLUtil.class) + path));
+
+            //获取包含类名的文本节点
+            NodeList nl = doc.getElementsByTagName("className");
+            Node classNode;
+            if (0 == i) {
+                classNode = nl.item(0).getFirstChild();
+            }
+            else {
+                classNode = nl.item(1).getFirstChild();
+            }
+
+            String cName = classNode.getNodeValue();
+
+            //通过类名生成实例对象并将其返回
+            Class c = Class.forName(cName);
+            Object obj = c.newInstance();
+            return obj;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Object getBean(String path, String args) {
+        try {
+            //创建文档对象
+            DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = dFactory.newDocumentBuilder();
+            Document doc;
+            doc = builder.parse(new File(ToolDirFile.getClassesPath(XMLUtil.class) + path));
+            NodeList nl = null;
+            Node classNode = null;
+            String cName = null;
+            nl = doc.getElementsByTagName("className");
+
+            if (args.equals("image")) {
+                //获取第一个包含类名的节点，即扩充抽象类
+                classNode = nl.item(0).getFirstChild();
+
+            } else if (args.equals("os")) {
+                //获取第二个包含类名的节点，即具体实现类
+                classNode = nl.item(1).getFirstChild();
+            }
+
+            cName = classNode.getNodeValue();
+            //通过类名生成实例对象并将其返回
+            Class c = Class.forName(cName);
+            Object obj = c.newInstance();
+            return obj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }
